@@ -3,6 +3,7 @@ package ui;
 import api.AdminResource;
 import model.RoomType;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -34,26 +35,42 @@ public class AdminMenu {
 
     public static void StartOptions() {
         while (true) {
+            boolean finish_option = false;
             printMenu(options);
-            int option_number = scanner.nextInt();
-            switch (option_number) {
-                case 1:
-                    seeAllCustomers();
-                    break;
-                case 2:
-                    seeAllRooms();
-                    break;
-                case 3:
-                    seeAllReservations();
-                    break;
-                case 4:
-                    addARoom();
-                case 5:
-                    MainMenu aMenu = new MainMenu();
-                    aMenu.StartOptions();
-                default:
-                    System.out.println("Invalid Inputs! Going back to the menu.....");
+            String option = scanner.next();
+            String regex = "[1-5]";
+            while (!finish_option) {
+                if (!Pattern.compile(regex).matcher(option).matches()) {
+                    System.out.println("Please enter number 1 to 5 to proceed.");
+                    option = scanner.next();
+                } else {
+                    finish_option = true;
+                }
+            }
+            int option_number = Integer.parseInt(option);
+            try {
+                switch (option_number) {
+                    case 1:
+                        seeAllCustomers();
+                        break;
+                    case 2:
+                        seeAllRooms();
+                        break;
+                    case 3:
+                        seeAllReservations();
+                        break;
+                    case 4:
+                        addARoom();
+                    case 5:
+                        MainMenu aMenu = new MainMenu();
+                        aMenu.StartOptions();
+                    default:
+                        System.out.println("Invalid Inputs! Going back to the menu.....");
 
+                }
+            }catch(InputMismatchException ex){
+                System.out.println("Invalid Inputs! Going back to the menu.....");
+                option = scanner.next();
         }
         }
     }

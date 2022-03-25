@@ -7,10 +7,7 @@ import model.Reservation;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Pattern;
 
 import static java.lang.System.exit;
@@ -46,28 +43,45 @@ public class MainMenu {
     }
     public void StartOptions(){
         while(true) {
+            boolean finish_option = false;
             printMenu(options);
 
-            int option_number = scanner.nextInt();
-            switch (option_number) {
-                case 1:
-                    FindAndReserve();
-                    break;
-                case 2:
-                    seeCustomerReservation();
-                    break;
-                case 3:
-                    createCustomerAccount();
-                    break;
-                case 4:
-                    AdminMenu aMenu = new AdminMenu();
-                    aMenu.StartOptions();
-                case 5:
-                    System.out.println("Closing the program, see you next time.");
-                    System.exit(0);
-                default:
-                    System.out.println("Invalid Inputs! Going back to the menu.....");
+            String option = scanner.next();
+            String regex = "[1-5]";
+            while(!finish_option){
+                if (!Pattern.compile(regex).matcher(option).matches()){
+                    System.out.println("Please enter number 1 to 5 to proceed.");
+                    option = scanner.next();
+                }else{
+                    finish_option = true;
+                }
+            }
+            Integer option_number = Integer.parseInt(option);
+            try {
+                switch (option_number) {
+                    case 1:
+                        FindAndReserve();
+                        break;
+                    case 2:
+                        seeCustomerReservation();
+                        break;
+                    case 3:
+                        createCustomerAccount();
+                        break;
+                    case 4:
+                        AdminMenu aMenu = new AdminMenu();
+                        aMenu.StartOptions();
+                    case 5:
+                        System.out.println("Closing the program, see you next time.");
+                        System.exit(0);
+                    default:
+                        System.out.println("Invalid Inputs! Going back to the menu.....");
+                        throw new InputMismatchException();
 
+                }
+            } catch(InputMismatchException  ex){
+                System.out.println("Invalid Inputs! Going back to the menu.....");
+                option = scanner.next();
             }
         }
 
