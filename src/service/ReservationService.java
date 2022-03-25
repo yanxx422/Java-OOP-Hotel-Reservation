@@ -58,7 +58,7 @@ public final class ReservationService {
         return newReservation;
     }
 
-    private static boolean isWithinRange(Date testDate, Date startDate, Date endDate) {
+     static boolean isWithinRange(Date testDate, Date startDate, Date endDate) {
         return testDate.after(startDate) && testDate.before(endDate);
     }
 
@@ -89,7 +89,7 @@ public final class ReservationService {
         return roomSetCopy;
     }
 
-    public Collection <Reservation> getAllReservation(){
+     Collection <Reservation> getAllReservation(){
         return reservationList;
     }
 
