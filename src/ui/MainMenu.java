@@ -104,8 +104,11 @@ public class MainMenu {
         String checkInDateText = "";
         Date checkOutDate = null;
         String checkOutDateText = "";
+        Date newCheckOutDate = null;
+        Date newCheckInDate = null;
         String roomNumber = "";
         String email = "";
+        Reservation newReservation;
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
         boolean finished_checkInDate = false;
@@ -142,7 +145,22 @@ public class MainMenu {
                 }
             }
         }
-        hotelresource.printRooms(hotelresource.findARoom(checkInDate, checkOutDate));
+        Calendar c = Calendar.getInstance();
+        c.setTime(checkInDate);
+        c.add(Calendar.DATE, 7);
+        newCheckInDate = c.getTime();
+        c.setTime(checkOutDate);
+        c.add(Calendar.DATE, 7);
+        newCheckOutDate = c.getTime();
+
+        boolean no_room_available = false;
+        if(hotelresource.findARoom(checkInDate, checkOutDate).size() == 0) {
+            System.out.println("No room found for the given date range, display recommended rooms after seven days..");
+            hotelresource.printRooms(hotelresource.findARoom(newCheckInDate, newCheckOutDate));
+            no_room_available = true;
+        } else{
+            hotelresource.printRooms(hotelresource.findARoom(checkInDate, checkOutDate));
+        }
 
         System.out.println("Would you like to book a room? y/n");
         while(!finished_book_decision){
@@ -178,8 +196,12 @@ public class MainMenu {
                                         finished_roomNumber = true;
                                     }
                                 }
+                                if(no_room_available){
+                                     newReservation = hotelresource.bookARoom(email,roomNumber,newCheckInDate, newCheckOutDate);
+                                } else{
+                                     newReservation = hotelresource.bookARoom(email,roomNumber,checkInDate, checkOutDate);
+                                }
 
-                                Reservation newReservation = hotelresource.bookARoom(email,roomNumber,checkInDate, checkOutDate);
                                 if (newReservation != null){
                                     System.out.println(newReservation);
                                 }
