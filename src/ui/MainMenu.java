@@ -106,7 +106,6 @@ public class MainMenu {
         String checkOutDateText = "";
         String roomNumber = "";
         String email = "";
-        Collection <IRoom> availableRooms = null;
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
         boolean finished_checkInDate = false;
@@ -143,24 +142,7 @@ public class MainMenu {
                 }
             }
         }
-
-
-        availableRooms =  hotelresource.findARoom(checkOutDate, checkOutDate);
-        if(availableRooms.size() == 0) {
-            System.out.println("No room found for the given date range, display recommended rooms that adds seven days..");
-            Calendar c = Calendar.getInstance();
-            c.setTime(checkInDate);
-            c.add(Calendar.DATE, 7);
-            Date newCheckInDate = c.getTime();
-
-            c.add(Calendar.DATE, 7);
-            Date newCheckOutDate = c.getTime();
-            availableRooms = hotelresource.findARoom(newCheckInDate, newCheckOutDate);
-        }
-        for(IRoom room:availableRooms){
-            System.out.println(room);
-        }
-
+        hotelresource.printRooms(hotelresource.findARoom(checkInDate, checkOutDate));
 
         System.out.println("Would you like to book a room? y/n");
         while(!finished_book_decision){
@@ -196,11 +178,11 @@ public class MainMenu {
                                         finished_roomNumber = true;
                                     }
                                 }
-                                Reservation newReservation = hotelresource.bookARoom(email, hotelresource.getRoom(roomNumber), checkInDate, checkOutDate);
+
+                                Reservation newReservation = hotelresource.bookARoom(email,roomNumber,checkInDate, checkOutDate);
                                 if (newReservation != null){
                                     System.out.println(newReservation);
                                 }
-
                                 break;
                             case 'N':
                             case 'n':

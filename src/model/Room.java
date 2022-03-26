@@ -4,9 +4,9 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class Room implements IRoom {
-    private String roomNumber;
+    private final String roomNumber;
     private Double price;
-    private RoomType enumeration;
+    private final RoomType enumeration;
 
     public Room(String roomNumber, Double price, RoomType enumeration){
         super();

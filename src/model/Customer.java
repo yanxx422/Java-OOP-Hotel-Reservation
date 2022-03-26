@@ -3,9 +3,9 @@ package model;
 import java.util.Objects;
 
 public class Customer {
-    private String firstName;
-    private String lastName;
-    private String email;
+    private final String firstName;
+    private final String lastName;
+    private final String email;
 
     public Customer(String firstName, String lastName, String email){
         this.firstName = firstName;

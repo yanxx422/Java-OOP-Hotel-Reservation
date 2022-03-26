@@ -5,10 +5,14 @@ import java.util.*;
 
 public final class ReservationService {
     private static ReservationService reservationService;
-    private Collection <Reservation> reservationList = new HashSet<Reservation>();
-    private Map<Customer,ArrayList<Reservation>> customerToReservation = new HashMap<Customer,ArrayList<Reservation>>();
-    private Set<IRoom> roomSet = new HashSet<IRoom>();
-    private ReservationService(){ };
+    private static Collection <Reservation> reservationList;
+    private static Map<Customer,ArrayList<Reservation>> customerToReservation;
+    private Set<IRoom> roomSet;
+    private ReservationService(){
+        this.reservationList = new HashSet<Reservation>();
+        this.roomSet = new HashSet<IRoom>();
+        this.customerToReservation = new HashMap<Customer,ArrayList<Reservation>>();
+    };
 
     public static ReservationService getInstance(){
         if (reservationService == null){
@@ -58,43 +62,54 @@ public final class ReservationService {
         return newReservation;
     }
 
-     static boolean isWithinRange(Date testDate, Date startDate, Date endDate) {
-        return testDate.after(startDate) && testDate.before(endDate);
-    }
-
     public Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate) {
-        Collection<IRoom> conflicting_rooms = new HashSet<>();
-        Collection<IRoom> roomSetCopy = new HashSet<>(roomSet);;
+        Collection<IRoom> unbookedRooms = new HashSet<>(roomSet);
+        Collection<IRoom> bookedRooms = getBookedRooms();
+        Collection<IRoom> available_rooms = new HashSet<>();
+        HashMap<IRoom,Integer> roomStates = new HashMap<>();
+        unbookedRooms.removeAll(bookedRooms);
 
+        //first check booked rooms
         for (Reservation reservation : reservationList) {
-            IRoom room = reservation.getRoom();
-            boolean checkInDateWithinRange = isWithinRange(checkInDate, reservation.getCheckInDate(), reservation.getCheckOutDate());
-            boolean checkOutDateWithinRange = isWithinRange(checkOutDate, reservation.getCheckInDate(), reservation.getCheckOutDate());
-
-            if (checkInDateWithinRange && checkOutDateWithinRange){
-                conflicting_rooms.add(room);
-            }
-            else if (checkInDateWithinRange){
-                conflicting_rooms.add(room);
-            }
-            else if(checkOutDateWithinRange){
-                conflicting_rooms.add(room);
-            }
-            else if ((checkInDate.before(reservation.getCheckInDate())) && ( checkOutDate.after(reservation.getCheckOutDate()))){
-                conflicting_rooms.add(room);
+            Date startDate = reservation.getCheckInDate();
+            Date endDate = reservation.getCheckOutDate();
+            if (( checkOutDate.before(startDate)) || checkInDate.after(endDate)){
+                //the reservation entry that passed date range
+                roomStates.put(reservation.getRoom(),1);
+            } else{
+                //entry didn't pass date range test
+                roomStates.replace(reservation.getRoom(),0);
             }
         }
+        //add booked rooms that passed range test
+        roomStates.forEach((key, value) -> {
+            if (value.equals(1)) {
+                available_rooms.add(key);
+            }
+        });
 
-        roomSetCopy.removeAll(conflicting_rooms);
-        return roomSetCopy;
+        //then add all unbooked rooms to the result list
+        available_rooms.addAll(unbookedRooms);
+
+        return available_rooms;
     }
 
-     Collection <Reservation> getAllReservation(){
+
+
+    Collection <Reservation> getAllReservation(){
         return reservationList;
     }
 
     public Collection <Reservation> getCustomersReservation(Customer customer){
         return customerToReservation.get(customer);
+    }
+
+    Collection <IRoom> getBookedRooms() {
+        Collection <IRoom> bookedRooms = new HashSet<>();
+        for (Reservation reservation: reservationList){
+            bookedRooms.add(reservation.getRoom());
+        }
+        return bookedRooms;
     }
 
     public void printAllReservation(){
@@ -108,7 +123,4 @@ public final class ReservationService {
             System.out.println(room);
         }
     }
-
-
-
 }

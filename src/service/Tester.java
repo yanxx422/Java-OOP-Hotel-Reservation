@@ -30,28 +30,23 @@ public class Tester {
 
 
 
-        reservationService.reserveARoom(customer_1, reservationService.getARoom("1"), parseDate("2022-03-25"), parseDate("2022-03-28"));
+        reservationService.reserveARoom(customer_1, reservationService.getARoom("2"), parseDate("2022-03-25"), parseDate("2022-03-28"));
 
-        System.out.println("\nShould print room 2, 3, 4\n");
+        System.out.println("\nShould print room 1, 3, 4\n");
         System.out.println(reservationService.findRooms(parseDate("2022-03-27"),parseDate("2022-4-1")));
 
-        System.out.println("\nEdge equals, Should print room 1, 2, 3, 4\n");
-        System.out.println(reservationService.findRooms(parseDate("2022-03-24"),parseDate("2022-3-25")));
+        reservationService.reserveARoom(customer_1, reservationService.getARoom("4"), parseDate("2022-03-27"), parseDate("2022-4-1"));
 
-        System.out.println("\nEdge equals, Should print room 1, 2, 3, 4\n");
-        System.out.println(reservationService.findRooms(parseDate("2022-03-28"),parseDate("2022-4-3")));
+        System.out.println("\nShould print room 1, 2, 3\n");
+        System.out.println(reservationService.findRooms(parseDate("2022-4-1"), parseDate("2022-4-5")));
+        System.out.println("\nShould print room 1, 3\n");
+        System.out.println(reservationService.findRooms(parseDate("2022-3-28"), parseDate("2022-4-2")));
+        reservationService.reserveARoom(customer_1, reservationService.getARoom("1"), parseDate("2022-03-8"), parseDate("2022-04-02"));
+        System.out.println("\nShould print room 3\n");
+        System.out.println(reservationService.findRooms(parseDate("2022-3-25"), parseDate("2022-4-1")));
 
-        System.out.println("\nShould print room  2, 3, 4\n");
-        System.out.println(reservationService.findRooms(parseDate("2022-03-24"),parseDate("2022-3-27")));
+        reservationService.reserveARoom(customer_1, reservationService.getARoom("2"), parseDate("2022-03-25"), parseDate("2022-03-28"));
 
-        System.out.println("\nShould print room  2, 3, 4\n");
-        System.out.println(reservationService.findRooms(parseDate("2022-03-26"),parseDate("2022-4-1")));
-
-        System.out.println("\nNon overlapping, Should print room  1, 2, 3, 4\n");
-        System.out.println(reservationService.findRooms(parseDate("2022-04-2"),parseDate("2022-4-9")));
-
-        System.out.println("\nNon overlapping, Should print room  1, 2, 3, 4\n");
-        System.out.println(reservationService.findRooms(parseDate("2022-02-2"),parseDate("2022-3-1")));
 
     }
 
