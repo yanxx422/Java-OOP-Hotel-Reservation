@@ -28,7 +28,22 @@ In user mode, you can:
 
 - Viewing reservations. After booking a room, the app allows customers to view a list of all their reservations. The user can only view the reservations associated with his/her account.
 
-# Getting Start
+### Reserving a Room – Requirements
+-  A single room may only be reserved by a single customer per a checkin and checkout date range.
+- If there are no available rooms for the customer's date range, a search will be performed that displays recommended rooms on alternative dates. The recommended room search will add seven days to the original checkin and checkout dates to see if the hotel has any availabilities, and then display the recommended rooms/dates to the customer.
+
+### Room Requirements
+- no two rooms can have the same room number.
+
+### Customer Requirements
+- A unique email for the customer
+
+### Error Requirements
+- No crashing
+- No unhandled exceptions
+
+
+# Getting Started
 Main class is in `ui/UIMenu.java`.
 
 # Further Info
