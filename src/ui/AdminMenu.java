@@ -66,7 +66,6 @@ public class AdminMenu {
                         aMenu.StartOptions();
                     default:
                         System.out.println("Invalid Inputs! Going back to the menu.....");
-
                 }
             }catch(InputMismatchException ex){
                 System.out.println("Invalid Inputs! Going back to the menu.....");
@@ -122,7 +121,6 @@ public class AdminMenu {
                 }
             }
 
-
             System.out.println("Enter room type: 1 for single bed, 2 for double bed");
             while(!finihsed_roomType){
                 switch (scanner.next()) {
@@ -163,5 +161,4 @@ public class AdminMenu {
             }
         }
     }
-
 }

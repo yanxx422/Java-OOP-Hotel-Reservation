@@ -2,15 +2,12 @@ package ui;
 
 import api.AdminResource;
 import api.HotelResource;
-import model.IRoom;
 import model.Reservation;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Pattern;
-
-import static java.lang.System.exit;
 
 public class MainMenu {
     private static HotelResource hotelresource;
@@ -45,7 +42,6 @@ public class MainMenu {
         while(true) {
             boolean finish_option = false;
             printMenu(options);
-
             String option = scanner.next();
             String regex = "[1-5]";
             while(!finish_option){
@@ -77,14 +73,12 @@ public class MainMenu {
                     default:
                         System.out.println("Invalid Inputs! Going back to the menu.....");
                         throw new InputMismatchException();
-
                 }
             } catch(InputMismatchException  ex){
                 System.out.println("Invalid Inputs! Going back to the menu.....");
                 option = scanner.next();
             }
         }
-
     }
 
     public static Date parseDate(String date) {
@@ -135,7 +129,6 @@ public class MainMenu {
             checkOutDateText = scanner.next();
             if (!Pattern.compile(dateRegex).matcher(checkOutDateText).matches()) {
                 System.out.println("Date is not valid, format yyyy-mm-dd example 2011-1-1");
-
             } else {
                 checkOutDate = parseDate(checkOutDateText);
                 if (checkOutDate.equals(checkInDate) || checkOutDate.before(checkInDate)) {
@@ -222,7 +215,6 @@ public class MainMenu {
                     break;
                 default:
                     System.out.println("Invalid inputs! Please enter y or n");
-
             }
         }
     }
@@ -261,9 +253,7 @@ public class MainMenu {
                     }
                     else{
                         System.out.println("This account doesn't have any reservations.");
-
                     }
-
                     break;
 
                 case 'N':
@@ -275,9 +265,6 @@ public class MainMenu {
                     System.out.println("Invalid inputs! Please enter y or n");
             }
         }
-
-
-
     }
 
     public void createCustomerAccount(){
@@ -323,5 +310,4 @@ public class MainMenu {
         }
         hotelresource.createACustomer(email, firstName, lastName);
     }
-
 }

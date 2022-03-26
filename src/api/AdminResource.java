@@ -1,6 +1,5 @@
 package api;
 
-
 import model.Customer;
 import model.IRoom;
 import model.RoomType;
@@ -8,7 +7,6 @@ import service.CustomerService;
 import service.ReservationService;
 
 import java.util.Collection;
-import java.util.List;
 
 public final class AdminResource {
     private static AdminResource admin_resource;
@@ -36,7 +34,6 @@ public final class AdminResource {
 
         reservationService.addRoom(roomNumber, price, enumeration);
     }
-
 
     public Collection<IRoom> getAllRooms(){
         return reservationService.getAllRooms();

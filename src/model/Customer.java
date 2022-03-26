@@ -34,5 +34,4 @@ public class Customer {
     public String toString(){
         return "Customer: " + firstName + " " + lastName + " Email: " + email;
     }
-
 }

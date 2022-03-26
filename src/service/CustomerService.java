@@ -1,7 +1,6 @@
 package service;
 
 import model.Customer;
-import model.IRoom;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -23,7 +22,6 @@ public final class CustomerService {
 
     public void addCustomer(String email, String firstName, String lastName){
         Customer_list.add(new Customer(firstName, lastName, email));
-
     }
 
     public Customer getCustomer(String email){
@@ -33,7 +31,6 @@ public final class CustomerService {
             }
         }
         return null;
-
     }
 
     public Collection<Customer> getAllCustomers(){
@@ -45,5 +42,4 @@ public final class CustomerService {
             System.out.println(customer);
         }
     }
-
 }

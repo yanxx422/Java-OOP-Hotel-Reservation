@@ -28,8 +28,6 @@ public class Tester {
         reservationService.addRoom("3",120.0, RoomType.DOUBLE);
         reservationService.addRoom("4",160.0, RoomType.DOUBLE);
 
-
-
         reservationService.reserveARoom(customer_1, reservationService.getARoom("2"), parseDate("2022-03-25"), parseDate("2022-03-28"));
 
         System.out.println("\nShould print room 1, 3, 4\n");
@@ -44,7 +42,6 @@ public class Tester {
         reservationService.reserveARoom(customer_1, reservationService.getARoom("1"), parseDate("2022-03-8"), parseDate("2022-04-02"));
         System.out.println("\nShould print room 3\n");
         System.out.println(reservationService.findRooms(parseDate("2022-3-25"), parseDate("2022-4-1")));
-
         reservationService.reserveARoom(customer_1, reservationService.getARoom("2"), parseDate("2022-03-25"), parseDate("2022-03-28"));
 
 

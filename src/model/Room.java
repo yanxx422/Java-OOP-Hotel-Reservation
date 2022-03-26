@@ -43,7 +43,6 @@ public class Room implements IRoom {
         return enumeration;
     }
 
-
     @Override
     public boolean isFree() {
         return false;
@@ -52,6 +51,5 @@ public class Room implements IRoom {
     @Override
     public String toString(){
         return " RoomNumber: " + roomNumber + " Price: " + price + " RoomType: " + enumeration + "\n";
-
     }
 }

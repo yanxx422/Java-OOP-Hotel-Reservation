@@ -23,7 +23,6 @@ public final class ReservationService {
 
     public void addRoom(String roomNumber, Double price, RoomType enumeration){
         roomSet.add(new Room(roomNumber, price, enumeration));
-
     }
 
     public IRoom getARoom(String roomId){
@@ -40,25 +39,22 @@ public final class ReservationService {
     }
 
     public Reservation reserveARoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate){
-
         Reservation newReservation = null;
-
         Collection<IRoom> available_rooms = findRooms(checkInDate, checkOutDate);
         if(!available_rooms.contains(room)){
             System.out.println("Create reservation failed, this room is not available.");
-        } else{
+        }
+        else{
             newReservation = new Reservation(customer, room, checkInDate, checkOutDate);
             reservationList.add(newReservation);
             if (customerToReservation.get(customer) != null){
                 customerToReservation.get(customer).add(newReservation);
-
             } else{
                 ArrayList<Reservation> NewReservationList = new ArrayList<>();
                 NewReservationList.add(newReservation);
                 customerToReservation.put(customer, NewReservationList);
             }
         }
-
         return newReservation;
     }
 
@@ -68,7 +64,6 @@ public final class ReservationService {
         Collection<IRoom> available_rooms = new HashSet<>();
         HashMap<IRoom,Integer> roomStates = new HashMap<>();
         unbookedRooms.removeAll(bookedRooms);
-
         //first check booked rooms
         for (Reservation reservation : reservationList) {
             Date startDate = reservation.getCheckInDate();
@@ -90,7 +85,6 @@ public final class ReservationService {
 
         //then add all unbooked rooms to the result list
         available_rooms.addAll(unbookedRooms);
-
         return available_rooms;
     }
 

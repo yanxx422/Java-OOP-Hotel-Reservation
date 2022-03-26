@@ -42,7 +42,6 @@ public final class HotelResource {
 
     public IRoom getRoom(String roomNumber){
         return reservationService.getARoom(roomNumber);
-
     }
 
     public Reservation bookARoom(String customerEmail, String roomNumber, Date checkInDate, Date CheckOutDate){
